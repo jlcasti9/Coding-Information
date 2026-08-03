@@ -4,29 +4,93 @@
 
 1. Open a terminal on your **Linux** machine.
 2. Copy a file from Windows to Linux:
+
     ```bash
     scp /path/to/local/file username@linux_host:/path/to/remote/directory
     ```
 
-- `/path/to/local/file` – path to the file on Windows
-- `username` – your Linux user
-- `linux_host` – IP or hostname of the Linux machine
-- `/path/to/remote/directory` – destination folder on Linux
+    - `/path/to/local/file` – path to the file on Windows
+    - `username` – your Linux user
+    - `linux_host` – IP or hostname of the Linux machine
+    - `/path/to/remote/directory` – destination folder on Linux
 
 ## How to SSH into a Linux machine from Windows
 
-1. Open a terminal or command prompt on your **Windows** machine.
-2. Use the following command to SSH into the Linux machine:
+1. Generate SSH key pair on Windows with OpenSSH (if you haven't already):
+
+    ```bash
+    ssh-keygen -t ed25519 -C "your_email@example.com"
+    ```
+
+    For backwards compatibility, you can use:
+
+    ```bash
+    ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+    ```
+
+2. Copy the public key to the Linux machine:
+
+    ```bash
+    ssh-copy-id username@linux_host
+    ```
+
+    _This will copy the public key to the Linux machine and add it to the `~/.ssh/authorized_keys` file._  
+    _You have to use Git Bash or WSL. Otherwise you have to manually add the public key to the `~/.ssh/authorized_keys` file on the Linux machine.._
+
+3. Now you can SSH into the Linux machine without entering a password:
+
     ```bash
     ssh username@linux_host
     ```
 
-- `username` – your Linux user
-- `linux_host` – IP or hostname of the Linux machine
+    - `username` – your Linux user
+    - `linux_host` – IP or hostname of the Linux machine
 
-You can type `exit` to log out of the SSH session.  
-You can setup SSH keys for passwordless login by generating a key pair on Windows and adding the public key to the `~/.ssh/authorized_keys` file on the Linux machine.  
-You can set a host alias in the `~/.ssh/config` file on Windows for easier access.
+_You can type `exit` to log out of the SSH session._
+
+## Easier SSH Access Setup
+
+1. Open the config file in your `~/.ssh` directory. If the file does not exist, simply create it:
+
+    ```bash
+    %USERPROFILE%\.ssh\config
+    ```
+
+2. Add the following content to the file:
+
+    ```
+    # Default settings for all hosts
+    Host *
+        ServerAliveInterval 60
+        ServerAliveCountMax 3
+        TCPKeepAlive yes
+        AddKeysToAgent yes
+
+    # My Linux Host
+    Host insert_alias_here
+        HostName linux_host
+        User username
+        Port 22
+        IdentityFile ~/.ssh/id_ed25519
+    ```
+
+    - `insert_alias_here` – a nickname for your Linux host (e.g., `myserver`)
+    - `linux_host` – IP or hostname of the Linux machine (e.g., `Username`)
+    - `username` – your Linux user
+    - `Port` – the SSH port (default is 22)
+    - `IdentityFile` – the path to your private SSH key
+    - `ServerAliveInterval` – how often to send a keep-alive message (in seconds)
+    - `ServerAliveCountMax` – how many keep-alive messages to send before disconnecting
+    - `TCPKeepAlive` – whether to use TCP keep-alive messages
+    - `AddKeysToAgent` – whether to add the private key to the SSH agent
+
+    _The alias defined in config only applies to SSH tools (ssh, scp, and sftp). It does not create a system wide hostname._
+
+3. Now you can SSH into your Linux machine using the alias you set up:
+
+    ```bash
+    ssh insert_alias_here
+    ```
 
 ## Creating a Python Virtual Environment (venv) in Linux
 

@@ -255,3 +255,36 @@ _You can type `exit` to log out of the SSH session._
 
 - **Open Command Palette**: `Ctrl + Shift + P`
 - **Open settings**: `Ctrl + ,`
+
+# Docker Commands and Tips
+
+- **See what is taking up space**: `docker system df`
+- **Remove stopped containers, unused networks, dangling images, and build cache**: `docker system prune`
+- **Remove all unused images, not just dangling ones**: `docker system prune -a`
+
+_You may need to compact the virtual disk of your Docker Desktop installation to reclaim space after pruning._
+
+## How to compact the virtual disk of your Docker Desktop installation
+
+1. Find the location of your Docker Desktop virtual disk. On Windows, it is usually located at:
+
+    ```
+    C:\Users\<YourUsername>\AppData\Local\Docker\wsl\disk\docker_data.vhdx
+    ```
+
+2. Open a PowerShell terminal as Administrator.
+3. Make sure WSL is not running. You can do this by running:
+
+    ```
+    wsl --shutdown
+    ```
+
+4. Run the following command to compact the virtual disk:
+    ```
+    diskpart
+    select vdisk file="C:\Users\<YourUsername>\AppData\Local\Docker\wsl\disk\docker_data.vhdx"
+    attach vdisk readonly
+    compact vdisk
+    detach vdisk
+    exit
+    ```

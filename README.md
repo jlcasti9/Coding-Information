@@ -242,12 +242,13 @@ _You can type `exit` to log out of the SSH session._
 - **Comment/Uncomment Line**: `Ctrl + /`
 - **Select current line**: `Ctrl + L`
 - **Copy Line Up/Down**: `Shift + Alt + Up/Down Arrow`
+- **Add multiple cursors**: `Ctrl + Alt + Click` or `Ctrl + Alt + Up/Down Arrow`
+- **Select all occurrences of a operation**: `Ctrl + F2`
 
 ---
 
-- **Add multiple cursors**: `Ctrl + Alt + Click` or `Ctrl + Alt + Up/Down Arrow`
-- **Select all occurrences of a operation**: `Ctrl + F2`
 - **Navigate to a specific line**: `Ctrl + G`
+- **Collapse by level**: `Crtl + K` then `Ctrl + 1/2/3/4/5/6/7`
 - **Go to Definition**: `F12`
 - **Trim Trailing Whitespace**: `Ctrl + K` then `Ctrl + X`
 

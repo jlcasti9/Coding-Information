@@ -248,6 +248,8 @@ _You can type `exit` to log out of the SSH session._
 ---
 
 - **Navigate to a specific line**: `Ctrl + G`
+- **Collapse all regions**: `Ctrl + K` then `Ctrl + 0`
+- **Expand all regions**: `Ctrl + K` then `Ctrl + J`
 - **Collapse by level**: `Crtl + K` then `Ctrl + 1/2/3/4/5/6/7`
 - **Go to Definition**: `F12`
 - **Trim Trailing Whitespace**: `Ctrl + K` then `Ctrl + X`
